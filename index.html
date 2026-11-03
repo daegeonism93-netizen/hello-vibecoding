@@ -2,56 +2,187 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>인사 페이지</title>
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    font-family: Arial, sans-serif;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>두리</title>
 
-  .box {
-    background: white;
-    padding: 50px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-  h1 { color: #333; }
-  p { color: #666; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      transition: background 0.4s;
+    }
 
-  button {
-    padding: 12px 25px;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-</style>
+    .card {
+      width: 100%;
+      max-width: 450px;
+      padding: 40px 30px;
+      background: white;
+      border-radius: 24px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      transition: background 0.4s;
+    }
+
+    h1 {
+      font-size: 38px;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: #666;
+      line-height: 1.7;
+    }
+
+    #clock {
+      color: #667eea;
+      margin: 20px 0;
+      font-size: 15px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #667eea;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      opacity: 0.9;
+    }
+
+    .map-btn {
+      background: #03a94d;
+      font-weight: bold;
+    }
+
+    #message {
+      min-height: 45px;
+      margin-top: 20px;
+    }
+
+    body.dark {
+      background: linear-gradient(135deg, #141428, #30304d);
+    }
+
+    body.dark .card {
+      background: #242438;
+    }
+
+    body.dark h1 {
+      color: white;
+    }
+
+    body.dark p {
+      color: #ddd;
+    }
+
+    body.dark #clock {
+      color: #b4baff;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="box">
-  <h1>👋 안녕하세요!</h1>
-  <p id="message">제 홈페이지에 오신 것을 환영합니다.</p>
-  <button onclick="hello()">인사하기</button>
-</div>
+  <div class="card">
 
-<script>
-function hello() {
-  document.getElementById("message").innerText =
-    "😊 만나서 반갑습니다! 좋은 하루 보내세요!";
-}
-</script>
+    <h1>🐶 두리</h1>
+
+    <p>두리네 집에 오신 것을 환영합니다! 💗</p>
+    <p>📍 전라남도 강진군 작천면 삼열리</p>
+
+    <div id="clock"></div>
+
+    <button class="map-btn" onclick="goMap()">
+      🗺️ 두리집 가는길
+    </button>
+
+    <button onclick="hello()">
+      👋 인사하기
+    </button>
+
+    <button onclick="cheer()">
+      ✨ 오늘의 응원 메시지
+    </button>
+
+    <button onclick="darkMode()">
+      🌙 다크모드 ON/OFF
+    </button>
+
+    <p id="message">두리가 기다리고 있어요! 🐾</p>
+
+  </div>
+
+  <script>
+    function goMap() {
+      const address = "전라남도 강진군 작천면 삼열리";
+      const url = "https://map.naver.com/p/search/"
+        + encodeURIComponent(address);
+
+      window.open(url, "_blank");
+    }
+
+    function hello() {
+      document.getElementById("message").innerText =
+        "🐶 두리네 집에 놀러 오세요!";
+    }
+
+    const cheers = [
+      "오늘도 행복한 하루 보내세요!",
+      "두리가 응원하고 있어요!",
+      "좋은 일들이 기다리고 있어요!",
+      "오늘도 힘내세요!",
+      "당신은 충분히 잘하고 있어요!",
+      "두리가 보고 싶어 해요!",
+      "작은 행복을 놓치지 마세요!",
+      "웃는 하루 보내세요!",
+      "오늘도 멋진 하루입니다!",
+      "두리와 함께 행복하세요!"
+    ];
+
+    function cheer() {
+      const random = Math.floor(Math.random() * cheers.length);
+      document.getElementById("message").innerText =
+        cheers[random];
+    }
+
+    function darkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").innerText =
+        now.toLocaleString("ko-KR", {
+          dateStyle: "full",
+          timeStyle: "medium"
+        });
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
 
 </body>
 </html>
+
